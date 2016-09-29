@@ -14,13 +14,13 @@ public class Bulle {
         return z;
     }
 
-    public double setX(double x){
+    public void setX(double x){
         this.x = x;
     }
-    public double setY(double y){
+    public void setY(double y){
         this.y = y;
     }
-    public double setZ(double z){
+    public void setZ(double z){
         this.z = z;
     }
 
