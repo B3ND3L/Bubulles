@@ -4,6 +4,12 @@ public class Bulle {
     private double y;
     private double z;
 
+    public Bulle(double x, double y, double z){
+    	this.x = x;
+    	this.y = y;
+    	this.z = z;
+    }
+    
     public double getX(){
         return x;
     }
@@ -26,5 +32,9 @@ public class Bulle {
 
 	public static void main(String[] args){
 		System.out.println(" Fine !");
+	}
+	
+	public String toString(){
+		return x + " " + y + " " + z;
 	}
 }
