@@ -10,7 +10,7 @@ public class Parser {
 	public ArrayList<Bulle> parse(String filename){
 		
 		String path = "";
-		File file = new File(filename);
+		File file = new File(path + filename);
 		
 		return readFile(file);
 	}
