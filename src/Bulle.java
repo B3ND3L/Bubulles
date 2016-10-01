@@ -30,10 +30,15 @@ public class Bulle {
         this.z = z;
     }
 
-	public static void main(String[] args){
-		System.out.println(" Fine !");
-	}
-	
+    public double computeDistance(Bulle other){
+    	
+    	//sqrt[(Xa-Xb)²+(Ya-Yb)²+(Za-Zb)²]
+    	return Math.sqrt(	Math.pow(x-other.getX(),2)+
+    						Math.pow(y-other.getY(),2)+
+    						Math.pow(z-other.getZ(),2)
+    					);    	
+    }
+    
 	public String toString(){
 		return x + " " + y + " " + z;
 	}

@@ -49,6 +49,15 @@ public class Parser {
 	
 	public static void main(String [] rgv){
 		Parser p = new Parser();
-		System.out.println(p.parse("norma_N5_tau4_dt2_delai820_000003.txt"));
+		
+		ArrayList<Bulle> res = p.parse("norma_N5_tau4_dt2_delai820_000003.txt");
+		
+		//System.out.println(res);
+		
+		Bulle b1 = res.get(1);
+		Bulle b2 = res.get(100);
+		
+		System.out.println(b1.computeDistance(b2));
+		
 	}
 }
