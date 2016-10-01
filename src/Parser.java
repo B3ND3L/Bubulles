@@ -25,23 +25,15 @@ public class Parser {
 			BufferedReader br=new BufferedReader(ipsr);
 			String line;
 			while ((line=br.readLine())!=null){
-				
+								
 				double x, y, z;
 				
-				String [] coords = line.split(" ");
-				/*
-				x = Double.parseDouble(coords[0]);
-				y = Double.parseDouble(coords[1]);
-				z = Double.parseDouble(coords[2]);
-				*/
+				String [] coords = line.split("   ");
 				
-				x = 1.0;
-				y = 1.0;
-				z = 1.0;
-				
-				
-				
-				System.out.println(coords[1]);
+				x = Double.parseDouble(coords[1]);
+				y = Double.parseDouble(coords[2]);
+				z = Double.parseDouble(coords[3]);
+					
 				
 				Bulle bulle = new Bulle(x,y,z);
 				bulles.add(bulle);
