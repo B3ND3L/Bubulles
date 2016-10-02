@@ -54,10 +54,28 @@ public class Parser {
 		
 		//System.out.println(res);
 		
-		Bulle b1 = res.get(1);
-		Bulle b2 = res.get(100);
+		for(Bulle b1 : res){
+			Bulle [] tab = new Bulle[4];
+			for(Bulle b2 : res){
+				double dist = b1.computeDistance(b2);
+				for(int i=0;i<4;i++){
+					try{
+					if(b1.computeDistance(tab[i])>dist && ! hasBulle(tab, b2))
+						tab[i] = b2;
+					}catch(Exception e){
+						tab[i] = b2;
+					}
+				}
+			}
+			System.out.println(b1);
+			for(int i=0;i<4;i++)
+				System.out.println(tab[i]);
+		}
+	}
+	
+	protected static boolean hasBulle(Bulle[] tab, Bulle bulle){
 		
-		System.out.println(b1.computeDistance(b2));
-		
+		for(Bulle b:tab) if(b==bulle) return true;
+		return false;
 	}
 }
