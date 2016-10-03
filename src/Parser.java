@@ -57,6 +57,23 @@ public class Parser {
 		return false;
 	}
 
+	private void trie(Bulle b1, Bulle[] tab, Bulle b2) {
+		double dist = b1.computeDistance(b2);
+		for(int i=0;i<4;i++){
+			if(!hasBulle(tab,b2)) {
+				if(tab[i] == null) {
+					tab[i] = b2;
+				}
+				else if(b1.computeDistance(tab[i]) > dist) {
+					Bulle tmp = tab[i];
+					tab[i] = b2;
+					//replacé la bulle précédente qui est peut etre plus proches que les autres stocké
+					trie(b1, tab, tmp);
+				}
+			}
+		}
+	}
+
 	protected Graph listToGraph(ArrayList<Bulle> list){
 		Graph graph = new MultiGraph("graph");
 
@@ -75,22 +92,12 @@ public class Parser {
 			for(Bulle b2 : list){
 				// Si b1 est différent de b2 pour évité les arêtes réflexives
 				if (!b1.equals(b2)) {
-					double dist = b1.computeDistance(b2);
-					for(int i=0;i<4;i++){
-
-
-						try{
-							if(b1.computeDistance(tab[i])>dist && ! hasBulle(tab, b2))
-								tab[i] = b2;
-						}catch(Exception e){
-							tab[i] = b2;
-						}
-					}
+					trie(b1, tab, b2);
 				}
 			}
 
 			for(int i=0; i<4; i++){
-				if(graph.getEdge(b1.getId()+"-"+tab[i].getId()) == null)
+				if(graph.getEdge(b1.getId()+"-"+tab[i].getId()) == null && graph.getEdge(tab[i].getId()+"-"+b1.getId()) == null)
 					try{
 						graph.addEdge(b1.getId()+"-"+tab[i].getId(), b1.getId()+"", tab[i].getId()+"");
 					}catch(Exception e){
