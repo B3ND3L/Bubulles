@@ -5,14 +5,18 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import org.graphstream.graph.Graph;
+import org.graphstream.graph.implementations.SingleGraph;
+
 public class Parser {
 	
-	public ArrayList<Bulle> parse(String filename){
+	public Graph parse(String filename){
 		
 		String path = "";
 		File file = new File(path + filename);
 		
-		return readFile(file);
+		ArrayList<Bulle> a = readFile(file);
+		return listToGraph(a);
 	}
 	
 	protected ArrayList<Bulle> readFile(File file){
@@ -47,35 +51,44 @@ public class Parser {
 		return bulles;
 	}	
 	
-	public static void main(String [] rgv){
-		Parser p = new Parser();
+	protected static boolean hasBulle(Bulle[] tab, Bulle bulle){
 		
-		ArrayList<Bulle> res = p.parse("norma_N5_tau4_dt2_delai820_000003.txt");
+		for(Bulle b:tab) if(b==bulle) return true;
+		return false;
+	}
+	
+	protected Graph listToGraph(ArrayList<Bulle> list){
+		Graph graph = new SingleGraph("graph");
 		
-		//System.out.println(res);
+		for(Bulle b1 : list){
+			graph.addNode(b1.getId()+"");
+		}
 		
-		for(Bulle b1 : res){
+		for(Bulle b1 : list){	
 			Bulle [] tab = new Bulle[4];
-			for(Bulle b2 : res){
+			
+			for(Bulle b2 : list){
 				double dist = b1.computeDistance(b2);
 				for(int i=0;i<4;i++){
 					try{
-					if(b1.computeDistance(tab[i])>dist && ! hasBulle(tab, b2))
-						tab[i] = b2;
+						if(b1.computeDistance(tab[i])>dist && ! hasBulle(tab, b2))
+							tab[i] = b2;
 					}catch(Exception e){
 						tab[i] = b2;
 					}
 				}
 			}
-			System.out.println(b1);
-			for(int i=0;i<4;i++)
-				System.out.println(tab[i]);
+			
+			for(int i=0; i<4; i++){
+				if(graph.getEdge(b1.getId()+"-"+tab[i].getId()) == null)
+					try{
+						graph.addEdge(b1.getId()+"-"+tab[i].getId(), b1.getId()+"", tab[i].getId()+"");
+					}catch(Exception e){
+						
+					}
+			}
+			
 		}
-	}
-	
-	protected static boolean hasBulle(Bulle[] tab, Bulle bulle){
-		
-		for(Bulle b:tab) if(b==bulle) return true;
-		return false;
+		return graph;
 	}
 }

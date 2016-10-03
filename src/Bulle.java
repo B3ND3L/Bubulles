@@ -1,13 +1,19 @@
 public class Bulle {
 
+	private static int ID = 0;
+	
     private double x;
     private double y;
     private double z;
-
+    private int id;
+    
     public Bulle(double x, double y, double z){
     	this.x = x;
     	this.y = y;
     	this.z = z;
+    	this.id = ID;
+    	
+    	ID = ID + 1;
     }
     
     public double getX(){
@@ -18,6 +24,10 @@ public class Bulle {
     }
     public double getZ(){
         return z;
+    }
+    
+    public int getId(){
+    	return id;
     }
 
     public void setX(double x){
