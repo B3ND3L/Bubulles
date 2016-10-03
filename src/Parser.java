@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import org.graphstream.graph.Graph;
-import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.graph.implementations.MultiGraph;
 
 public class Parser {
 
@@ -58,7 +58,7 @@ public class Parser {
 	}
 
 	protected Graph listToGraph(ArrayList<Bulle> list){
-		Graph graph = new SingleGraph("graph");
+		Graph graph = new MultiGraph("graph");
 
 		for(Bulle b1 : list){
 			graph.addNode(b1.getId()+"");
@@ -73,13 +73,18 @@ public class Parser {
 			Bulle [] tab = new Bulle[4];
 
 			for(Bulle b2 : list){
-				double dist = b1.computeDistance(b2);
-				for(int i=0;i<4;i++){
-					try{
-						if(b1.computeDistance(tab[i])>dist && ! hasBulle(tab, b2))
+				// Si b1 est différent de b2 pour évité les arêtes réflexives
+				if (!b1.equals(b2)) {
+					double dist = b1.computeDistance(b2);
+					for(int i=0;i<4;i++){
+
+
+						try{
+							if(b1.computeDistance(tab[i])>dist && ! hasBulle(tab, b2))
+								tab[i] = b2;
+						}catch(Exception e){
 							tab[i] = b2;
-					}catch(Exception e){
-						tab[i] = b2;
+						}
 					}
 				}
 			}
