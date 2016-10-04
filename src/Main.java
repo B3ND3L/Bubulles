@@ -13,9 +13,6 @@ public class Main {
 		g.addAttribute("ui.antialias");
 		g.addAttribute("ui.quality");
 
-		System.out.println(g.getNodeCount());
-		System.out.println(g.getEdgeCount());
-
 		g.display(false);
 	}
 
