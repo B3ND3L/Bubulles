@@ -7,10 +7,11 @@ import java.util.ArrayList;
 
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.MultiGraph;
+import org.graphstream.graph.Edge;
 
 public class Parser {
 
-	public Graph parse(String filename){
+	public GraphBulle parse(String filename){
 
 		String path = "";
 		File file = new File(path + filename);
@@ -74,8 +75,8 @@ public class Parser {
 		}
 	}
 
-	protected Graph listToGraph(ArrayList<Bulle> list){
-		Graph graph = new MultiGraph("graph");
+	protected GraphBulle listToGraph(ArrayList<Bulle> list){
+		GraphBulle graph = new GraphBulle("graph");
 
 		for(Bulle b1 : list){
 			graph.addNode(b1.getId()+"");
@@ -100,6 +101,7 @@ public class Parser {
 				if(graph.getEdge(b1.getId()+"-"+tab[i].getId()) == null && graph.getEdge(tab[i].getId()+"-"+b1.getId()) == null)
 					try{
 						graph.addEdge(b1.getId()+"-"+tab[i].getId(), b1.getId()+"", tab[i].getId()+"");
+						graph.getEdge(b1.getId()+"-"+tab[i].getId()).setAttribute("distance", b1.computeDistance(tab[i]) );
 					}catch(Exception e){
 
 					}
