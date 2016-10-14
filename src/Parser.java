@@ -85,6 +85,7 @@ public class Parser {
 			graph.getNode(b1.getId()+"").setAttribute("x",b1.getX());
 			graph.getNode(b1.getId()+"").setAttribute("y",b1.getY());
 			graph.getNode(b1.getId()+"").setAttribute("z",b1.getZ());
+			graph.getNode(b1.getId()+"").setAttribute("ligne",b1.getId()+1);
 		}
 
 		for(Bulle b1 : list){

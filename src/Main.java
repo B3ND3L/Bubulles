@@ -36,9 +36,6 @@ public class Main {
 		}*/
 
 		g2.display(false);
-
-		Fenetre3D f = new Fenetre3D(g);
-		f.execute();
 	}
 
 }
