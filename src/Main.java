@@ -10,9 +10,6 @@ public class Main {
 		/* Meilleur Viewer pour le graphe*/
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
-		/* Nécéssaire pour la vue 3D*/
-		System.setProperty("java.library.path", "lib/lwjgl/native");
-
 		Parser p = new Parser();
 		GraphBulle g = p.parse("norma_N5_tau4_dt2_delai820_000003.txt");
 

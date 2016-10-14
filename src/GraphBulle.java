@@ -81,6 +81,7 @@ public class GraphBulle extends MultiGraph {
       g.getNode(groupe[i].getId()+" "+idGroupe).setAttribute("z", ""+groupe[i].getNumber("z"));
       g.getNode(groupe[i].getId()+" "+idGroupe).setAttribute("idGroupe", idGroupe);
       g.getNode(groupe[i].getId()+" "+idGroupe).setAttribute("ui.color", couleur);
+      g.getNode(groupe[i].getId()+" "+idGroupe).setAttribute("ligne", ""+groupe[i].getNumber("ligne"));
     }
 
     for (int i=1; i<5; i++) {
