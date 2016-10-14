@@ -58,23 +58,6 @@ public class Parser {
 		return false;
 	}
 
-	private void trie(Bulle b1, Bulle[] tab, Bulle b2) {
-		double dist = b1.computeDistance(b2);
-		for(int i=0;i<4;i++){
-			if(!hasBulle(tab,b2)) {
-				if(tab[i] == null) {
-					tab[i] = b2;
-				}
-				else if(b1.computeDistance(tab[i]) > dist) {
-					Bulle tmp = tab[i];
-					tab[i] = b2;
-					//replacé la bulle précédente qui est peut etre plus proches que les autres stocké
-					trie(b1, tab, tmp);
-				}
-			}
-		}
-	}
-
 	protected GraphBulle listToGraph(ArrayList<Bulle> list){
 		GraphBulle graph = new GraphBulle("graph");
 
@@ -88,27 +71,18 @@ public class Parser {
 			graph.getNode(b1.getId()+"").setAttribute("ligne",b1.getId()+1);
 		}
 
-		for(Bulle b1 : list){
-			Bulle [] tab = new Bulle[4];
-
-			for(Bulle b2 : list){
-				// Si b1 est différent de b2 pour évité les arêtes réflexives
-				if (!b1.equals(b2)) {
-					trie(b1, tab, b2);
+		double radius = 1.3;
+		for( Bulle b1 : list) {
+			for (Bulle b2 : list) {
+				if (!b1.equals(b2) && b1.computeDistance(b2)<= radius) {
+					if(graph.getEdge(b1.getId()+"-"+b2.getId()) == null && graph.getEdge(b2.getId()+"-"+b1.getId()) == null) {
+						graph.addEdge(b1.getId()+"-"+b2.getId(), b1.getId()+"", b2.getId()+"");
+						graph.getEdge(b1.getId()+"-"+b2.getId()).addAttribute("distance", b1.computeDistance(b2));
+					}
 				}
 			}
-
-			for(int i=0; i<4; i++){
-				if(graph.getEdge(b1.getId()+"-"+tab[i].getId()) == null && graph.getEdge(tab[i].getId()+"-"+b1.getId()) == null)
-					try{
-						graph.addEdge(b1.getId()+"-"+tab[i].getId(), b1.getId()+"", tab[i].getId()+"");
-						graph.getEdge(b1.getId()+"-"+tab[i].getId()).setAttribute("distance", b1.computeDistance(tab[i]) );
-					}catch(Exception e){
-
-					}
-			}
-
 		}
+
 		return graph;
 	}
 }
