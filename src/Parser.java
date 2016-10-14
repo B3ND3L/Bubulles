@@ -1,12 +1,15 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.graphstream.graph.Graph;
+import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.MultiGraph;
+
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+
+import org.graphstream.algorithm.ConnectedComponents;
+import org.graphstream.algorithm.ConnectedComponents.ConnectedComponent;
 import org.graphstream.graph.Edge;
 
 public class Parser {
@@ -90,5 +93,31 @@ public class Parser {
 		}
 
 		return graph;
+	}
+	
+public void groupsToFile(Graph g){
+		
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(new File("resultat.txt")));
+			
+			int prevGroupe = 1;
+			String ligne = "";
+			for( Node n : g){
+				String name = n.getId().split(" ")[0];
+				int groupe = Integer.parseInt(n.getId().split(" ")[1]);
+				if(prevGroupe == groupe){
+					ligne += name+" ";
+				}else{
+					writer.write(ligne+"\r\n");
+					ligne = name+" ";
+				}
+				prevGroupe = groupe;
+			}
+			writer.close();
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
 	}
 }

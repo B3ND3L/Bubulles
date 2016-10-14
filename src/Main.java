@@ -33,6 +33,7 @@ public class Main {
 		}*/
 
 		g2.display(false);
+		p.groupsToFile(g2);
 	}
 
 }
