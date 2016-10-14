@@ -71,13 +71,19 @@ public class Parser {
 			graph.getNode(b1.getId()+"").setAttribute("ligne",b1.getId()+1);
 		}
 
+		//A REGLER
 		double radius = 1.3;
-		for( Bulle b1 : list) {
-			for (Bulle b2 : list) {
+
+		for( Bulle b1 : list){
+			for (Bulle b2 : list){
 				if (!b1.equals(b2) && b1.computeDistance(b2)<= radius) {
-					if(graph.getEdge(b1.getId()+"-"+b2.getId()) == null && graph.getEdge(b2.getId()+"-"+b1.getId()) == null) {
-						graph.addEdge(b1.getId()+"-"+b2.getId(), b1.getId()+"", b2.getId()+"");
-						graph.getEdge(b1.getId()+"-"+b2.getId()).addAttribute("distance", b1.computeDistance(b2));
+					if(graph.getEdge(b1.getId()+"-"+b2.getId()) == null && graph.getEdge(b2.getId()+"-"+b1.getId()) == null){
+						try{
+							graph.addEdge(b1.getId()+"-"+b2.getId(), b1.getId()+"", b2.getId()+"");
+							graph.getEdge(b1.getId()+"-"+b2.getId()).addAttribute("distance", b1.computeDistance(b2));
+						}catch(Exception e){
+
+						}
 					}
 				}
 			}
