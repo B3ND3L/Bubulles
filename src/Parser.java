@@ -5,6 +5,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import static org.graphstream.algorithm.Toolkit.*;
+
+import org.graphstream.algorithm.Toolkit;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.MultiGraph;
 
@@ -57,6 +60,8 @@ public class Parser {
 		return false;
 	}
 
+	
+	//Deprecated
 	private void trie(Bulle b1, Bulle[] tab, Bulle b2) {
 		double dist = b1.computeDistance(b2);
 		for(int i=0;i<4;i++){
@@ -85,27 +90,26 @@ public class Parser {
 			graph.getNode(b1.getId()+"").setAttribute("y",b1.getY());
 			graph.getNode(b1.getId()+"").setAttribute("z",b1.getZ());
 		}
+		
+		//A REGLER
+		double radius = 1.3;
+		
+		for( Bulle b1 : list){
+			for (Bulle b2 : list){
+				if (!b1.equals(b2) && b1.computeDistance(b2)<= radius) {
+					if(graph.getEdge(b1.getId()+"-"+b2.getId()) == null && graph.getEdge(b2.getId()+"-"+b1.getId()) == null)
+						try{
+							graph.addEdge(b1.getId()+"-"+b2.getId(), b1.getId()+"", b2.getId()+"");
+							graph.getEdge(b1.getId()+"-"+b2.getId()).addAttribute("distance", b1.computeDistance(b2));
+						}catch(Exception e){
 
-		for(Bulle b1 : list){
-			Bulle [] tab = new Bulle[4];
-
-			for(Bulle b2 : list){
-				// Si b1 est différent de b2 pour évité les arêtes réflexives
-				if (!b1.equals(b2)) {
-					trie(b1, tab, b2);
+						}
 				}
+				
 			}
-
-			for(int i=0; i<4; i++){
-				if(graph.getEdge(b1.getId()+"-"+tab[i].getId()) == null && graph.getEdge(tab[i].getId()+"-"+b1.getId()) == null)
-					try{
-						graph.addEdge(b1.getId()+"-"+tab[i].getId(), b1.getId()+"", tab[i].getId()+"");
-					}catch(Exception e){
-
-					}
-			}
-
 		}
+			
+		
 		return graph;
 	}
 }
