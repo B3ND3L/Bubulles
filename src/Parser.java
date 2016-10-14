@@ -5,9 +5,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import static org.graphstream.algorithm.Toolkit.*;
-
-import org.graphstream.algorithm.Toolkit;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.MultiGraph;
 
@@ -60,25 +57,6 @@ public class Parser {
 		return false;
 	}
 
-	
-	//Deprecated
-	private void trie(Bulle b1, Bulle[] tab, Bulle b2) {
-		double dist = b1.computeDistance(b2);
-		for(int i=0;i<4;i++){
-			if(!hasBulle(tab,b2)) {
-				if(tab[i] == null) {
-					tab[i] = b2;
-				}
-				else if(b1.computeDistance(tab[i]) > dist) {
-					Bulle tmp = tab[i];
-					tab[i] = b2;
-					//replacé la bulle précédente qui est peut etre plus proches que les autres stocké
-					trie(b1, tab, tmp);
-				}
-			}
-		}
-	}
-
 	protected Graph listToGraph(ArrayList<Bulle> list){
 		Graph graph = new MultiGraph("graph");
 
@@ -97,19 +75,18 @@ public class Parser {
 		for( Bulle b1 : list){
 			for (Bulle b2 : list){
 				if (!b1.equals(b2) && b1.computeDistance(b2)<= radius) {
-					if(graph.getEdge(b1.getId()+"-"+b2.getId()) == null && graph.getEdge(b2.getId()+"-"+b1.getId()) == null)
+					if(graph.getEdge(b1.getId()+"-"+b2.getId()) == null && graph.getEdge(b2.getId()+"-"+b1.getId()) == null){
 						try{
 							graph.addEdge(b1.getId()+"-"+b2.getId(), b1.getId()+"", b2.getId()+"");
 							graph.getEdge(b1.getId()+"-"+b2.getId()).addAttribute("distance", b1.computeDistance(b2));
 						}catch(Exception e){
 
 						}
+					}
 				}
 				
 			}
 		}
-			
-		
 		return graph;
 	}
 }
