@@ -1,0 +1,8 @@
+node {
+	size:6px;
+}
+
+node.red {
+	size:6px;
+	fill-color:#FF0000;
+}

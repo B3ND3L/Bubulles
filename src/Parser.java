@@ -100,6 +100,7 @@ public class Parser {
 				if(graph.getEdge(b1.getId()+"-"+tab[i].getId()) == null && graph.getEdge(tab[i].getId()+"-"+b1.getId()) == null)
 					try{
 						graph.addEdge(b1.getId()+"-"+tab[i].getId(), b1.getId()+"", tab[i].getId()+"");
+						graph.getEdge(b1.getId()+"-"+tab[i].getId()).addAttribute("distance", b1.computeDistance(tab[i]));
 					}catch(Exception e){
 
 					}
