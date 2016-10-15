@@ -74,7 +74,7 @@ public class Parser {
 			graph.getNode(b1.getId()+"").setAttribute("ligne",b1.getId()+1);
 		}
 
-		//A REGLER
+		// A REGLER
 		double radius = 1.3;
 
 		for( Bulle b1 : list){
@@ -94,12 +94,12 @@ public class Parser {
 
 		return graph;
 	}
-	
+
 public void groupsToFile(Graph g){
-		
+
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(new File("resultat.txt")));
-			
+
 			int prevGroupe = 1;
 			String ligne = "";
 			for( Node n : g){
