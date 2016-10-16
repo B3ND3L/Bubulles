@@ -6,8 +6,8 @@ import org.graphstream.graph.Edge;
 public class GraphBulle extends MultiGraph {
 
   // la contrainte sur l'anle en degrés
-  private static double TAUX_ERREUR = 0.4;
-  private static double CONTRAINTE_ANGLE = 30.0 ;
+  private double TAUX_ERREUR = 0.4;
+  private double CONTRAINTE_ANGLE = 30.0 ;
 
   private int idGroupe;
 
@@ -96,7 +96,10 @@ public class GraphBulle extends MultiGraph {
     }
   }
 
-  public GraphBulle chercherGroupe() {
+  public GraphBulle chercherGroupe(double tauxErreur, double angle) {
+      TAUX_ERREUR = tauxErreur;
+      CONTRAINTE_ANGLE = angle;
+      
       // mis en place d'un identifiant de groupe pour chaque bulle
       initRecherche();
 

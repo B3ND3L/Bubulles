@@ -8,13 +8,16 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import java.util.Random;
@@ -81,7 +84,21 @@ public class Main extends JFrame {
 		// listener bouton menu
 		chercher.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				chercherGroupe();
+
+				// fenetre popup pour selectionné les deux paramètre
+				JTextField taux = new JTextField();
+				JTextField angle = new JTextField();
+
+				final JComponent[] entrees = new JComponent[] {
+						new JLabel("Taux d'erreur : "),
+						taux,
+						new JLabel("Angle maximum  (en degrès) : "),
+						angle,
+				};
+				JOptionPane.showMessageDialog(null, entrees, "Choix des paramètres", JOptionPane.PLAIN_MESSAGE);
+
+				// verifier si les données entrée sont bonne
+				chercherGroupe( Double.parseDouble( taux.getText() ), Double.parseDouble( angle.getText() ) );
 				enregistrer.setEnabled(true);
 			}
 		});
@@ -126,11 +143,11 @@ public class Main extends JFrame {
 		pack();
 	}
 
-	public void chercherGroupe() {
+	public void chercherGroupe(double taux, double angle) {
 		vueGraphe.removeAll();
 		vueGraphe.add(new JLabel("recherche en cours"));
 		pack();
-		g = g.chercherGroupe();
+		g = g.chercherGroupe(taux, angle);
 		vueGraphe.removeAll();
 		g.setAttribute("ui.quality");
 		g.setAttribute("ui.antialias");
