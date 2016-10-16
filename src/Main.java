@@ -27,6 +27,11 @@ public class Main extends JFrame {
 
 	private GraphBulle g;
 
+	// les différents menu
+	private JMenuItem charger;
+	private JMenuItem chercher;
+	private JMenuItem enregistrer;
+
 	public Main() {
 		super("Fenetre");
 
@@ -56,7 +61,7 @@ public class Main extends JFrame {
 		JMenu fichier = new JMenu("Fichier");
 
 		// le bouton pour charger un fichier contenant les bulles
-		JMenuItem charger = new JMenuItem("Ouvrir un fichier");
+		charger = new JMenuItem("Ouvrir un fichier");
 		// listener bouton menu
 		charger.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
@@ -65,23 +70,25 @@ public class Main extends JFrame {
 				if (resu != JFileChooser.CANCEL_OPTION) {
 					String chemin = dialogue.getSelectedFile().getAbsolutePath();
 					initGraphe(chemin);
+					chercher.setEnabled(true);
 				}
 			}
 		});
 		fichier.add(charger);
 
 		// le bouton pour chercher les groupes
-		JMenuItem chercher = new JMenuItem("Chercher les groupes");
+		chercher = new JMenuItem("Chercher les groupes");
 		// listener bouton menu
 		chercher.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				chercherGroupe();
+				enregistrer.setEnabled(true);
 			}
 		});
 		fichier.add(chercher);
 
 		// le bouton pour enregistrer les groupes
-		JMenuItem enregistrer = new JMenuItem("Enregistrer les groupes");
+		enregistrer = new JMenuItem("Enregistrer les groupes");
 		// listener bouton menu
 		enregistrer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
@@ -94,6 +101,9 @@ public class Main extends JFrame {
 
 		// ajout du menu à la fenetre
 		this.add(menu, BorderLayout.NORTH);
+
+		chercher.setEnabled(false);
+		enregistrer.setEnabled(false);
 	}
 
 	public void initGraphe() {
