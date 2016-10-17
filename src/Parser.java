@@ -95,10 +95,10 @@ public class Parser {
 		return graph;
 	}
 
-public void groupsToFile(Graph g){
+public void groupsToFile(Graph g, File fichier){
 
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(new File("resultat.txt")));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(fichier));
 
 			int prevGroupe = 1;
 			String ligne = "";

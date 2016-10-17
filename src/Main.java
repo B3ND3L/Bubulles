@@ -99,6 +99,7 @@ public class Main extends JFrame {
 
 				// verifier si les données entrée sont bonne
 				chercherGroupe( Double.parseDouble( taux.getText() ), Double.parseDouble( angle.getText() ) );
+				chercher.setEnabled(false);
 				enregistrer.setEnabled(true);
 			}
 		});
@@ -166,8 +167,13 @@ public class Main extends JFrame {
 	}
 
 	public void enregistrer() {
-		Parser p = new Parser();
-		p.groupsToFile(g);
+		JFileChooser dialogue = new JFileChooser();
+		int choix = dialogue.showSaveDialog(null);
+		if (choix == JFileChooser.APPROVE_OPTION) {
+				Parser p = new Parser();
+				p.groupsToFile(g, dialogue.getSelectedFile());
+		}
+
 	}
 
 	public static void main(String[] args) {
