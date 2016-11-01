@@ -90,7 +90,7 @@ public class Main extends JFrame {
 				JTextField angle = new JTextField();
 
 				final JComponent[] entrees = new JComponent[] {
-						new JLabel("Taux d'erreur : "),
+						new JLabel("Taux d'erreur (en %): "),
 						taux,
 						new JLabel("Angle maximum  (en degrès) : "),
 						angle,
@@ -98,7 +98,7 @@ public class Main extends JFrame {
 				JOptionPane.showMessageDialog(null, entrees, "Choix des paramètres", JOptionPane.PLAIN_MESSAGE);
 
 				// verifier si les données entrée sont bonne
-				chercherGroupe( Double.parseDouble( taux.getText() ), Double.parseDouble( angle.getText() ) );
+				chercherGroupe( Double.parseDouble( taux.getText() )/100.0, Double.parseDouble( angle.getText() ) );
 				chercher.setEnabled(false);
 				enregistrer.setEnabled(true);
 			}
